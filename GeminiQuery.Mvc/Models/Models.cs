@@ -28,10 +28,9 @@
 
     public record SafetyRating(string category, string probability);
 
-    public static class Envs
-    {
-        public const string Url = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent";
-        public const string Key = "";
-        public const string ConnectionString = "";
-    }
+    public record Schema(
+        string table_name,
+        string column_name,
+        string data_type,
+        string is_nullable);
 }
