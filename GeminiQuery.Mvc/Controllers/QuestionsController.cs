@@ -90,8 +90,8 @@ namespace GeminiQuery.Mvc.Controllers
             {schema}
 
             gere uma query que apresente o seguinte resultado: {prompt}
-            não explique
 
+            não explique
             utilize alias com duas letras
             utilize lower case
             especifique o schema
