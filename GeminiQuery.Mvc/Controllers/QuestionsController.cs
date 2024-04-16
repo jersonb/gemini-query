@@ -33,21 +33,21 @@ namespace GeminiQuery.Mvc.Controllers
             var schema = await GetSchema(connection);
 
             var prompt = GetQuestion(schema, question.Content);
-            var poicly = Policy
+            var policy = Policy
                        .Handle<Exception>()
                        .WaitAndRetryAsync(10, (x) => TimeSpan.FromSeconds(1), (ex, y, attempt, w) =>
                        {
                            logger.LogError(ex, "Tentativa:{tentativa}", attempt);
                        });
 
-            var resultData = await poicly.ExecuteAsync(() => Handler(connection, prompt));
+            var resultData = await policy.ExecuteAsync(() => Handler(connection, prompt));
 
             logger.LogInformation("Query: {query}", prompt);
 
             JsonToXlsx jsonToXlsx = resultData;
 
             using var ms = jsonToXlsx.MemoryStream;
-            return File(ms.ToArray(), MediaTypeNames.Application.Octet, $"gemini-quuery-{DateTime.Now:HHmmss}.xlsx", true);
+            return File(ms.ToArray(), MediaTypeNames.Application.Octet, $"gemini-query-{DateTime.Now:HHmmss}.xlsx", true);
         }
 
         private static string MakeQueryJson(string query)
