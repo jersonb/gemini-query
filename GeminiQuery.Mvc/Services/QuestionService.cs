@@ -24,10 +24,11 @@ public class QuestionService(
 
         var prompt = GetQuestion(schema, question.Content);
 
-        logger.LogInformation("Query: {@Query}", prompt);
+        logger.LogInformation("Prompt: {@Prompt}", prompt);
 
         (string Query, string ResultData) = await Policy.ExecuteAsync(() => Handler(connection, prompt));
-        question.Query = Query;
+
+        logger.LogInformation("Query: {@Query}", Query);
 
         return ResultData;
     }
@@ -54,8 +55,6 @@ public class QuestionService(
     private async Task<(string Query, string ResultData)> Handler(NpgsqlConnection connection, string question)
     {
         var resultQuery = await RequestGemini(question);
-
-        logger.LogInformation("Query {query}", resultQuery);
 
         var finalQuery = MakeQueryJson(resultQuery);
 
