@@ -22,7 +22,7 @@ namespace GeminiQuery.Mvc.Controllers
             JsonToXlsx jsonToXlsx = resultData;
 
             using var ms = jsonToXlsx.MemoryStream;
-            return File(ms.ToArray(), MediaTypeNames.Application.Octet, $"gemini-quuery-{DateTime.Now:HHmmss}.xlsx", true);
+            return File(ms.ToArray(), MediaTypeNames.Application.Octet, $"gemini-query-{DateTime.Now:HHmmss}.xlsx", true);
         }
     }
 }
